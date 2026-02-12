@@ -937,17 +937,14 @@ class mainLib
 			curl_exec($ch);
 			$sizeBytes = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
 			curl_close($ch);
-
 			if ($sizeBytes <= 0) {
 				$size = 1;
 			} else {
 				$size = round($sizeBytes / 1024 / 1024, 2);
 			}
-
 			$ext = strtolower(pathinfo(parse_url($song, PHP_URL_PATH), PATHINFO_EXTENSION));
 			$allowedExt = ["mp3", "wav", "ogg", "webm", "mp4"];
 			if (!in_array($ext, $allowedExt)) return "-4";
-
 			$hash = "";
 			$query = $db->prepare("INSERT INTO songs (ID, name, authorID, authorName, size, download, hash, reuploadTime, reuploadID)
 			VALUES (:songID, :name, '9', :author, :size, :download, :hash, :time, :accountID)");
